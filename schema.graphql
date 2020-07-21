@@ -1,0 +1,6 @@
+type ExampleEntity @entity {
+  id: ID!
+  count: BigInt!
+  executor: Bytes! # address
+  taskReceiptId: BigInt! # uint256
+}
