@@ -1,0 +1,104 @@
+specVersion: 0.0.2
+description: Ethereum's Automation Protocol on Mainnet
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x1d681d76ce96E4d70a88A00EBbcfc1E47808d0b8"
+      abi: Contract
+      startBlock: 10368663
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - LogCanExecFailed
+        - LogExecReverted
+        - LogExecSuccess
+        - LogExecutorAssignedExecutor
+        - LogExecutorBalanceWithdrawn
+        - LogExecutorStaked
+        - LogExecutorSuccessShareSet
+        - LogExecutorUnstaked
+        - LogFundsProvided
+        - LogFundsUnprovided
+        - LogGelatoGasPriceOracleSet
+        - LogGelatoMaxGasSet
+        - LogInternalGasRequirementSet
+        - LogMinExecutorStakeSet
+        - LogOracleRequestDataSet
+        - LogProviderAssignedExecutor
+        - LogProviderModuleAdded
+        - LogProviderModuleRemoved
+        - LogSysAdminFundsWithdrawn
+        - LogSysAdminSuccessShareSet
+        - LogTaskCancelled
+        - LogTaskSpecGasPriceCeilSet
+        - LogTaskSpecProvided
+        - LogTaskSpecUnprovided
+        - LogTaskSubmitted
+        - OwnershipTransferred
+      abis:
+        - name: Contract
+          file: Contract/abis/Contract.json
+      callHandlers:
+        - function: submitTask(tuple,tuple,uint256)
+          handler: handleSubmitTask
+      eventHandlers:
+        - event: LogCanExecFailed(indexed address,indexed uint256,string)
+          handler: handleLogCanExecFailed
+        - event: LogExecReverted(indexed address,indexed uint256,uint256,string)
+          handler: handleLogExecReverted
+        - event: LogExecSuccess(indexed address,indexed uint256,uint256,uint256)
+          handler: handleLogExecSuccess
+        - event: LogExecutorAssignedExecutor(indexed address,indexed address,indexed address)
+          handler: handleLogExecutorAssignedExecutor
+        - event: LogExecutorBalanceWithdrawn(indexed address,uint256)
+          handler: handleLogExecutorBalanceWithdrawn
+        - event: LogExecutorStaked(indexed address,uint256,uint256)
+          handler: handleLogExecutorStaked
+        - event: LogExecutorSuccessShareSet(uint256,uint256,uint256)
+          handler: handleLogExecutorSuccessShareSet
+        - event: LogExecutorUnstaked(indexed address)
+          handler: handleLogExecutorUnstaked
+        - event: LogFundsProvided(indexed address,uint256,uint256)
+          handler: handleLogFundsProvided
+        - event: LogFundsUnprovided(indexed address,uint256,uint256)
+          handler: handleLogFundsUnprovided
+        - event: LogGelatoGasPriceOracleSet(indexed address,indexed address)
+          handler: handleLogGelatoGasPriceOracleSet
+        - event: LogGelatoMaxGasSet(uint256,uint256)
+          handler: handleLogGelatoMaxGasSet
+        - event: LogInternalGasRequirementSet(uint256,uint256)
+          handler: handleLogInternalGasRequirementSet
+        - event: LogMinExecutorStakeSet(uint256,uint256)
+          handler: handleLogMinExecutorStakeSet
+        - event: LogOracleRequestDataSet(bytes,bytes)
+          handler: handleLogOracleRequestDataSet
+        - event: LogProviderAssignedExecutor(indexed address,indexed address,indexed address)
+          handler: handleLogProviderAssignedExecutor
+        - event: LogProviderModuleAdded(indexed address,indexed address)
+          handler: handleLogProviderModuleAdded
+        - event: LogProviderModuleRemoved(indexed address,indexed address)
+          handler: handleLogProviderModuleRemoved
+        - event: LogSysAdminFundsWithdrawn(uint256,uint256)
+          handler: handleLogSysAdminFundsWithdrawn
+        - event: LogSysAdminSuccessShareSet(uint256,uint256,uint256)
+          handler: handleLogSysAdminSuccessShareSet
+        - event: LogTaskCancelled(indexed uint256,indexed address)
+          handler: handleLogTaskCancelled
+        - event: LogTaskSpecGasPriceCeilSet(indexed address,bytes32,uint256,uint256)
+          handler: handleLogTaskSpecGasPriceCeilSet
+        - event: LogTaskSpecProvided(indexed address,indexed bytes32)
+          handler: handleLogTaskSpecProvided
+        - event: LogTaskSpecUnprovided(indexed address,indexed bytes32)
+          handler: handleLogTaskSpecUnprovided
+        - event: LogTaskSubmitted(indexed uint256,indexed
+            bytes32,(uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256))
+          handler: handleLogTaskSubmitted
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: Contract/Contract.wasm
