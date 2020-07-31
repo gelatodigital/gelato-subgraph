@@ -153,7 +153,6 @@ function getCondition(
   eventAction: LogTaskSubmittedTaskReceiptTasksConditionsStruct
 ): Condition | null {
   let condition = new Condition(eventAction.inst.toHex());
-  condition.save();
 
   condition.inst = eventAction.inst;
   condition.data = eventAction.data;
@@ -172,97 +171,97 @@ export function handleLogTaskSubmitted(event: LogTaskSubmitted): void {
     user.save();
   }
 
-  // let taskReceipt = new TaskReceipt(event.params.taskReceiptId.toHex());
-  // taskReceipt.userProxy = user.address;
-  // // New Provider
-  // let provider = Provider.load(event.params.taskReceipt.provider.addr.toHex());
-  // if (provider == null) {
-  //   provider = new Provider(event.params.taskReceipt.provider.addr.toHex());
-  //   // Entity fields can be set using simple assignments
-  //   provider.taskCount = BigInt.fromI32(0);
-  // }
-  // provider.addr = event.params.taskReceipt.provider.addr;
-  // provider.module = event.params.taskReceipt.provider.module;
-  // provider.taskCount = provider.taskCount.plus(BigInt.fromI32(1));
-  // provider.save();
-  // taskReceipt.provider = provider.id;
-  // // Index
-  // taskReceipt.index = event.params.taskReceipt.index;
-  // // Iterate over all tasks
-  // let taskArray = new Array<string>();
-  // let eventTaskArray = event.params.taskReceipt.tasks;
-  // let tasksNum = eventTaskArray.length;
-  // for (let i = 0; i < tasksNum; ++i) {
-  //   let task = new Task(event.params.taskReceiptId.toHex());
-  //   taskArray.push(task.id);
-  //   if (eventTaskArray[i] != null) {
-  //     let eventTask = eventTaskArray[i];
-  //     // Fetch the Actions
-  //     let actions = eventTask.actions;
-  //     let actionsLength = eventTask.actions.length;
-  //     let actionArray = new Array<string>();
-  //     for (let j = 0; j < actionsLength; ++j) {
-  //       if (actions[i] != null) {
-  //         let eventAction = actions[i];
-  //         let action = getAction(eventAction) as Action;
-  //         actionArray.push(action.id);
-  //       }
-  //     }
-  //     task.actions = actionArray;
-  //     // Fetch Conditions
-  //     let conditions = eventTask.conditions;
-  //     let conditionLength = eventTask.conditions.length;
-  //     let conditionArray = new Array<string>();
-  //     for (let j = 0; j < conditionLength; ++j) {
-  //       if (conditions[i] != null) {
-  //         let eventCondition = conditions[i];
-  //         let condition = getCondition(eventCondition) as Condition;
-  //         conditionArray.push(condition.id);
-  //       }
-  //     }
-  //     // Add selfProviderGasLimit && selfProviderGasPriceCeil
-  //     task.selfProviderGasLimit = eventTask.selfProviderGasLimit;
-  //     task.selfProviderGasPriceCeil = eventTask.selfProviderGasPriceCeil;
-  //   }
-  // }
-  // // Add tasks to TaskReceipt
-  // taskReceipt.tasks = taskArray;
-  // // Add the remaining fields
-  // taskReceipt.expiryDate = event.params.taskReceipt.expiryDate;
-  // taskReceipt.cycleId = event.params.taskReceipt.cycleId;
-  // taskReceipt.submissionsLeft = event.params.taskReceipt.submissionsLeft;
-  // taskReceipt.save();
+  let taskReceipt = new TaskReceipt(event.params.taskReceiptId.toHex());
+  taskReceipt.userProxy = user.address;
+  // New Provider
+  let provider = Provider.load(event.params.taskReceipt.provider.addr.toHex());
+  if (provider == null) {
+    provider = new Provider(event.params.taskReceipt.provider.addr.toHex());
+    // Entity fields can be set using simple assignments
+    provider.taskCount = BigInt.fromI32(0);
+  }
+  provider.addr = event.params.taskReceipt.provider.addr;
+  provider.module = event.params.taskReceipt.provider.module;
+  provider.taskCount = provider.taskCount.plus(BigInt.fromI32(1));
+  provider.save();
+  taskReceipt.provider = provider.id;
+  // Index
+  taskReceipt.index = event.params.taskReceipt.index;
+  // Iterate over all tasks
+  let taskArray = new Array<string>();
+  let eventTaskArray = event.params.taskReceipt.tasks;
+  let tasksNum = eventTaskArray.length;
+  for (let i = 0; i < tasksNum; ++i) {
+    let task = new Task(event.params.taskReceiptId.toHex());
+    taskArray.push(task.id);
+    if (eventTaskArray[i] != null) {
+      let eventTask = eventTaskArray[i];
+      // Fetch the Actions
+      let actions = eventTask.actions;
+      let actionsLength = eventTask.actions.length;
+      let actionArray = new Array<string>();
+      for (let j = 0; j < actionsLength; ++j) {
+        if (actions[i] != null) {
+          let eventAction = actions[i];
+          let action = getAction(eventAction) as Action;
+          actionArray.push(action.id);
+        }
+      }
+      task.actions = actionArray;
+      // Fetch Conditions
+      let conditions = eventTask.conditions;
+      let conditionLength = eventTask.conditions.length;
+      let conditionArray = new Array<string>();
+      for (let j = 0; j < conditionLength; ++j) {
+        if (conditions[i] != null) {
+          let eventCondition = conditions[i];
+          let condition = getCondition(eventCondition) as Condition;
+          conditionArray.push(condition.id);
+        }
+      }
+      // Add selfProviderGasLimit && selfProviderGasPriceCeil
+      task.selfProviderGasLimit = eventTask.selfProviderGasLimit;
+      task.selfProviderGasPriceCeil = eventTask.selfProviderGasPriceCeil;
+    }
+  }
+  // Add tasks to TaskReceipt
+  taskReceipt.tasks = taskArray;
+  // Add the remaining fields
+  taskReceipt.expiryDate = event.params.taskReceipt.expiryDate;
+  taskReceipt.cycleId = event.params.taskReceipt.cycleId;
+  taskReceipt.submissionsLeft = event.params.taskReceipt.submissionsLeft;
+  taskReceipt.save();
 
-  // // Add taskReceipt to Task Cycle
-  // let taskCycle = TaskCycle.load(taskReceipt.cycleId.toHex());
-  // if (taskCycle == null) {
-  //   taskCycle = new TaskCycle(taskReceipt.cycleId.toHex());
-  // }
-  // taskCycle.tasksReceipts.push(taskReceipt.id);
-  // taskCycle.save();
+  // Add taskReceipt to Task Cycle
+  let taskCycle = TaskCycle.load(taskReceipt.cycleId.toHex());
+  if (taskCycle == null) {
+    taskCycle = new TaskCycle(taskReceipt.cycleId.toHex());
+  }
+  taskCycle.tasksReceipts.push(taskReceipt.id);
+  taskCycle.save();
 
-  // // // ==== Create TaskReceiptWrapper === \\
-  // let taskReceiptWrapper = new TaskReceiptWrapper(
-  //   event.params.taskReceiptId.toHex()
-  // );
-  // taskReceiptWrapper.user = user.id;
-  // taskReceiptWrapper.taskReceipt = taskReceipt.id;
-  // taskReceiptWrapper.taskReceipt = taskReceipt.id;
-  // taskReceiptWrapper.submissionHash = event.transaction.hash;
-  // taskReceiptWrapper.status = "awaitingExec";
-  // taskReceiptWrapper.submissionDate = event.block.timestamp;
+  // // ==== Create TaskReceiptWrapper === \\
+  let taskReceiptWrapper = new TaskReceiptWrapper(
+    event.params.taskReceiptId.toHex()
+  );
+  taskReceiptWrapper.user = user.id;
+  taskReceiptWrapper.taskReceipt = taskReceipt.id;
+  taskReceiptWrapper.taskReceipt = taskReceipt.id;
+  taskReceiptWrapper.submissionHash = event.transaction.hash;
+  taskReceiptWrapper.status = "awaitingExec";
+  taskReceiptWrapper.submissionDate = event.block.timestamp;
 
-  // // Assigned Executor
-  // let gelatoCore = Contract.bind(event.address);
-  // let executor = gelatoCore.executorByProvider(
-  //   Address.fromString(provider.addr.toString())
-  // );
-  // taskReceiptWrapper.selectedExecutor = executor;
+  // Assigned Executor
+  let gelatoCore = Contract.bind(event.address);
+  let executor = gelatoCore.executorByProvider(
+    Address.fromString(provider.addr.toHexString())
+  );
+  taskReceiptWrapper.selectedExecutor = executor;
 
-  // taskReceiptWrapper.selfProvided =
-  //   provider.addr == user.address ? true : false;
+  taskReceiptWrapper.selfProvided =
+    provider.addr == user.address ? true : false;
 
-  // taskReceiptWrapper.save();
+  taskReceiptWrapper.save();
 }
 
 export function handleLogCanExecFailed(event: LogCanExecFailed): void {
@@ -449,108 +448,3 @@ export function handleLogTaskSpecUnprovided(
 ): void {}
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
-
-// export function handleSubmitTask(call: SubmitTaskCall): void {
-//   let eventTaskReceipt = call.inputs._task.
-
-//   let user = User.load(event.params.taskReceipt.userProxy.toHex());
-//   if (user == null) {
-//     user = new User(event.params.taskReceipt.userProxy.toHex());
-//     user.address = event.params.taskReceipt.userProxy;
-//     user.signUpDate = BigInt.fromI32(10);
-//     user.save();
-//   }
-
-//   let taskReceipt = new TaskReceipt(event.params.taskReceiptId.toHex());
-//   taskReceipt.userProxy = user.address;
-//   // New Provider
-//   let provider = Provider.load(event.params.taskReceipt.provider.addr.toHex());
-//   if (provider == null) {
-//     provider = new Provider(event.params.taskReceipt.provider.addr.toHex());
-//     // Entity fields can be set using simple assignments
-//     provider.taskCount = BigInt.fromI32(0);
-//   }
-//   provider.addr = event.params.taskReceipt.provider.addr;
-//   provider.module = event.params.taskReceipt.provider.module;
-//   provider.taskCount = provider.taskCount.plus(BigInt.fromI32(1));
-//   provider.save();
-//   taskReceipt.provider = provider.id;
-//   // Index
-//   taskReceipt.index = event.params.taskReceipt.index;
-//   // Iterate over all tasks
-//   let taskArray = new Array<string>();
-//   let eventTaskArray = event.params.taskReceipt.tasks;
-//   let tasksNum = eventTaskArray.length;
-//   for (let i = 0; i < tasksNum; ++i) {
-//     let task = new Task(event.params.taskReceiptId.toHex());
-//     taskArray.push(task.id);
-//     if (eventTaskArray[i] != null) {
-//       let eventTask = eventTaskArray[i];
-//       // Fetch the Actions
-//       let actions = eventTask.actions;
-//       let actionsLength = eventTask.actions.length;
-//       let actionArray = new Array<string>();
-//       for (let j = 0; j < actionsLength; ++j) {
-//         if (actions[i] != null) {
-//           let eventAction = actions[i];
-//           let action = getAction(eventAction) as Action;
-//           actionArray.push(action.id);
-//         }
-//       }
-//       task.actions = actionArray;
-//       // Fetch Conditions
-//       let conditions = eventTask.conditions;
-//       let conditionLength = eventTask.conditions.length;
-//       let conditionArray = new Array<string>();
-//       for (let j = 0; j < conditionLength; ++j) {
-//         if (conditions[i] != null) {
-//           let eventCondition = conditions[i];
-//           let condition = getCondition(eventCondition) as Condition;
-//           conditionArray.push(condition.id);
-//         }
-//       }
-//       // Add selfProviderGasLimit && selfProviderGasPriceCeil
-//       task.selfProviderGasLimit = eventTask.selfProviderGasLimit;
-//       task.selfProviderGasPriceCeil = eventTask.selfProviderGasPriceCeil;
-//     }
-//   }
-//   // Add tasks to TaskReceipt
-//   taskReceipt.tasks = taskArray;
-//   // Add the remaining fields
-//   taskReceipt.expiryDate = event.params.taskReceipt.expiryDate;
-//   taskReceipt.cycleId = event.params.taskReceipt.cycleId;
-//   taskReceipt.submissionsLeft = event.params.taskReceipt.submissionsLeft;
-//   taskReceipt.save();
-
-//   // Add taskReceipt to Task Cycle
-//   let taskCycle = TaskCycle.load(taskReceipt.cycleId.toHex());
-//   if (taskCycle == null) {
-//     taskCycle = new TaskCycle(taskReceipt.cycleId.toHex());
-//   }
-//   taskCycle.tasksReceipts.push(taskReceipt.id);
-//   taskCycle.save();
-
-//   // // ==== Create TaskReceiptWrapper === \\
-//   let taskReceiptWrapper = new TaskReceiptWrapper(
-//     event.params.taskReceiptId.toHex()
-//   );
-//   taskReceiptWrapper.user = user.id;
-//   taskReceiptWrapper.taskReceipt = taskReceipt.id;
-//   taskReceiptWrapper.taskReceipt = taskReceipt.id;
-//   taskReceiptWrapper.submissionHash = event.transaction.hash;
-//   taskReceiptWrapper.status = "awaitingExec";
-//   taskReceiptWrapper.submissionDate = event.block.timestamp;
-
-//   // Assigned Executor
-//   let gelatoCore = Contract.bind(event.address);
-//   let executor = gelatoCore.executorByProvider(
-//     Address.fromString(provider.addr.toString())
-//   );
-//   taskReceiptWrapper.selectedExecutor = executor;
-
-//   taskReceiptWrapper.selfProvided =
-//     provider.addr == user.address ? true : false;
-
-//   taskReceiptWrapper.save();
-
-// }

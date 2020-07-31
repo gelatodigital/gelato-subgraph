@@ -44,9 +44,6 @@ dataSources:
       abis:
         - name: Contract
           file: ./abis/Contract.json
-      callHandlers:
-        - function: submitTask(tuple,tuple,uint256)
-          handler: handleSubmitTask
       eventHandlers:
         - event: LogCanExecFailed(indexed address,indexed uint256,string)
           handler: handleLogCanExecFailed
@@ -96,7 +93,7 @@ dataSources:
           handler: handleLogTaskSpecProvided
         - event: LogTaskSpecUnprovided(indexed address,indexed bytes32)
           handler: handleLogTaskSpecUnprovided
-        - event: LogTaskSubmitted(indexed uint256,indexed bytes32,(uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256))
+        - event: LogTaskSubmitted(indexed uint256,indexed bytes32,(uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256))
           handler: handleLogTaskSubmitted
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
