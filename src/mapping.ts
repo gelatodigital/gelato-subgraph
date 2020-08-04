@@ -1,64 +1,6 @@
 import { BigInt, Address } from "@graphprotocol/graph-ts";
 import { log } from "@graphprotocol/graph-ts";
 
-/**
-
-class Tuple extends Array<Value> {}
-
-
-  class Block {
-    hash: Bytes
-    parentHash: Bytes
-    unclesHash: Bytes
-    author: Address
-    stateRoot: Bytes
-    transactionsRoot: Bytes
-    receiptsRoot: Bytes
-    number: BigInt
-    gasUsed: BigInt
-    gasLimit: BigInt
-    timestamp: BigInt
-    difficulty: BigInt
-    totalDifficulty: BigInt
-    size: BigInt | null
-  }
-  class Transaction {
-    hash: Bytes
-    index: BigInt
-    from: Address
-    to: Address | null
-    value: BigInt
-    gasUsed: BigInt
-    gasPrice: BigInt
-    input: Bytes
-  }
-
-  class Call {
-    to: Address
-    from: Address
-    block: Block
-    transaction: Transaction
-    inputValues: Array<EventParam>
-    outputValues: Array<EventParam>
-  }
-
-  class Event {
-    address: Address
-    logIndex: BigInt
-    transactionLogIndex: BigInt
-    logType: string | null
-    block: Block
-    transaction: Transaction
-    parameters: Array<EventParam>
-  }
-
-
-  class EventParam {
-    name: string
-    value: Value
-  }
-  */
-
 import {
   Contract,
   LogCanExecFailed,
@@ -89,7 +31,6 @@ import {
   OwnershipTransferred,
   LogTaskSubmittedTaskReceiptTasksActionsStruct,
   LogTaskSubmittedTaskReceiptTasksConditionsStruct,
-  SubmitTaskCall,
 } from "../generated/Contract/Contract";
 import {
   User,
@@ -103,59 +44,34 @@ import {
   Executor,
 } from "../generated/schema";
 
-function getOperation(operation: i32): string {
-  switch (operation) {
-    // Call
-    case 0:
-      return "0";
-    case 1:
-      // Delegatecall
-      return "1";
-    default:
-      throw new Error("Operation incorrect");
-  }
-}
-
-function getDataFlow(dataFlow: i32): string {
-  switch (dataFlow) {
-    // None
-    case 0:
-      return "0";
-    // In
-    case 1:
-      return "1";
-    // Out
-    case 2:
-      return "2";
-    // InAndOut
-    case 3:
-      return "3";
-    default:
-      throw new Error("DataFlow incorrect");
-  }
-}
-
 function getAction(
+  actionId: string,
   eventAction: LogTaskSubmittedTaskReceiptTasksActionsStruct
 ): Action | null {
-  let action = new Action(eventAction.addr.toHex());
+  let action = new Action(actionId);
+
   action.addr = eventAction.addr;
   action.data = eventAction.data;
-  action.dataFlow = getDataFlow(eventAction.dataFlow);
-  action.operation = getOperation(eventAction.operation);
+  action.dataFlow = BigInt.fromI32(eventAction.dataFlow);
+  action.operation = BigInt.fromI32(eventAction.operation);
   action.termsOkCheck = eventAction.termsOkCheck;
   action.value = eventAction.value;
+
+  action.save();
 
   return action;
 }
 
 function getCondition(
-  eventAction: LogTaskSubmittedTaskReceiptTasksConditionsStruct
+  conditionId: string,
+  eventCondition: LogTaskSubmittedTaskReceiptTasksConditionsStruct
 ): Condition | null {
-  let condition = new Condition(eventAction.inst.toHex());
+  let condition = new Condition(conditionId.toString());
 
-  condition.inst = eventAction.inst;
-  condition.data = eventAction.data;
+  condition.inst = eventCondition.inst;
+  condition.data = eventCondition.data;
+
+  condition.save();
 
   return condition;
 }
@@ -167,11 +83,12 @@ export function handleLogTaskSubmitted(event: LogTaskSubmitted): void {
   if (user == null) {
     user = new User(event.params.taskReceipt.userProxy.toHex());
     user.address = event.params.taskReceipt.userProxy;
-    user.signUpDate = BigInt.fromI32(10);
+    user.signUpDate = event.block.timestamp;
     user.save();
   }
 
-  let taskReceipt = new TaskReceipt(event.params.taskReceiptId.toHex());
+  let taskReceiptId = event.params.taskReceiptId.toString();
+  let taskReceipt = new TaskReceipt(taskReceiptId);
   taskReceipt.userProxy = user.address;
   // New Provider
   let provider = Provider.load(event.params.taskReceipt.provider.addr.toHex());
@@ -192,53 +109,63 @@ export function handleLogTaskSubmitted(event: LogTaskSubmitted): void {
   let eventTaskArray = event.params.taskReceipt.tasks;
   let tasksNum = eventTaskArray.length;
   for (let i = 0; i < tasksNum; ++i) {
-    let task = new Task(event.params.taskReceiptId.toHex());
-    taskArray.push(task.id);
+    let taskId = taskReceiptId.toString() + "." + i.toString();
+    let task = new Task(taskId);
     if (eventTaskArray[i] != null) {
       let eventTask = eventTaskArray[i];
+
       // Fetch the Actions
       let actions = eventTask.actions;
       let actionsLength = eventTask.actions.length;
       let actionArray = new Array<string>();
+
       for (let j = 0; j < actionsLength; ++j) {
-        if (actions[i] != null) {
-          let eventAction = actions[i];
-          let action = getAction(eventAction) as Action;
+        if (actions[j] != null) {
+          let eventAction = actions[j];
+          let action = getAction(
+            taskId + "." + j.toString(),
+            eventAction
+          ) as Action;
           actionArray.push(action.id);
         }
       }
       task.actions = actionArray;
+
       // Fetch Conditions
       let conditions = eventTask.conditions;
       let conditionLength = eventTask.conditions.length;
       let conditionArray = new Array<string>();
+
       for (let j = 0; j < conditionLength; ++j) {
-        if (conditions[i] != null) {
-          let eventCondition = conditions[i];
-          let condition = getCondition(eventCondition) as Condition;
+        if (conditions[j] != null) {
+          let eventCondition = conditions[j];
+          let condition = getCondition(
+            taskId + "." + j.toString(),
+            eventCondition
+          ) as Condition;
           conditionArray.push(condition.id);
         }
       }
+
+      task.conditions = conditionArray;
+
       // Add selfProviderGasLimit && selfProviderGasPriceCeil
       task.selfProviderGasLimit = eventTask.selfProviderGasLimit;
       task.selfProviderGasPriceCeil = eventTask.selfProviderGasPriceCeil;
+
+      task.save();
+      taskArray.push(task.id);
     }
   }
+
   // Add tasks to TaskReceipt
   taskReceipt.tasks = taskArray;
+
   // Add the remaining fields
   taskReceipt.expiryDate = event.params.taskReceipt.expiryDate;
   taskReceipt.cycleId = event.params.taskReceipt.cycleId;
   taskReceipt.submissionsLeft = event.params.taskReceipt.submissionsLeft;
   taskReceipt.save();
-
-  // Add taskReceipt to Task Cycle
-  let taskCycle = TaskCycle.load(taskReceipt.cycleId.toHex());
-  if (taskCycle == null) {
-    taskCycle = new TaskCycle(taskReceipt.cycleId.toHex());
-  }
-  taskCycle.tasksReceipts.push(taskReceipt.id);
-  taskCycle.save();
 
   // // ==== Create TaskReceiptWrapper === \\
   let taskReceiptWrapper = new TaskReceiptWrapper(
@@ -262,104 +189,40 @@ export function handleLogTaskSubmitted(event: LogTaskSubmitted): void {
     provider.addr == user.address ? true : false;
 
   taskReceiptWrapper.save();
+
+  // Add taskReceipt to Task Cycle
+  let taskCycle = TaskCycle.load(taskReceipt.cycleId.toString());
+  if (taskCycle == null) {
+    taskCycle = new TaskCycle(taskReceipt.cycleId.toString());
+    taskCycle.taskReceiptWrappers = [];
+  }
+
+  let taskCycleReceiptIds = taskCycle.taskReceiptWrappers;
+  taskCycleReceiptIds.push(taskReceiptWrapper.id);
+  taskCycle.taskReceiptWrappers = taskCycleReceiptIds;
+  taskCycle.save();
 }
 
-export function handleLogCanExecFailed(event: LogCanExecFailed): void {
-  // const id = event.transaction.from.toHex();
-  // // Entities can be loaded from the store using a string ID; this ID
-  // // needs to be unique across all entities of the same type
-  // let entity = ExampleEntity.load(event.transaction.from.toHex());
-  // // Entities only exist after they have been saved to the store;
-  // // `null` checks allow to create entities on demand
-  // if (entity == null) {
-  //   entity = new ExampleEntity(event.transaction.from.toHex());
-  //   // Entity fields can be set using simple assignments
-  //   entity.count = BigInt.fromI32(0);
-  // }
-  // // BigInt and BigDecimal math are supported
-  // entity.count = entity.count + BigInt.fromI32(1);
-  // // Entity fields can be set based on event parameters
-  // entity.executor = event.params.executor;
-  // entity.taskReceiptId = event.params.taskReceiptId;
-  // // Entities can be written to the store with `.save()`
-  // entity.save();
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.EXEC_TX_OVERHEAD(...)
-  // - contract.NO_CEIL(...)
-  // - contract.canExec(...)
-  // - contract.canSubmitTask(...)
-  // - contract.currentTaskReceiptId(...)
-  // - contract.executionWrapper(...)
-  // - contract.executorByProvider(...)
-  // - contract.executorProvidersCount(...)
-  // - contract.executorStake(...)
-  // - contract.executorSuccessFee(...)
-  // - contract.executorSuccessShare(...)
-  // - contract.gelatoGasPriceOracle(...)
-  // - contract.gelatoMaxGas(...)
-  // - contract.hashTaskReceipt(...)
-  // - contract.hashTaskSpec(...)
-  // - contract.internalGasRequirement(...)
-  // - contract.isExecutorAssigned(...)
-  // - contract.isExecutorMinStaked(...)
-  // - contract.isModuleProvided(...)
-  // - contract.isOwner(...)
-  // - contract.isProviderLiquid(...)
-  // - contract.isTaskProvided(...)
-  // - contract.isTaskSpecProvided(...)
-  // - contract.minExecProviderFunds(...)
-  // - contract.minExecutorStake(...)
-  // - contract.oracleRequestData(...)
-  // - contract.owner(...)
-  // - contract.providerCanExec(...)
-  // - contract.providerFunds(...)
-  // - contract.providerModuleChecks(...)
-  // - contract.providerModules(...)
-  // - contract.sysAdminFunds(...)
-  // - contract.sysAdminSuccessFee(...)
-  // - contract.sysAdminSuccessShare(...)
-  // - contract.taskReceiptHash(...)
-  // - contract.taskSpecGasPriceCeil(...)
-  // - contract.totalSuccessShare(...)
-  // - contract.unprovideFunds(...)
-  // - contract.withdrawExcessExecutorStake(...)
-  // - contract.withdrawSysAdminFunds(...)
-}
+export function handleLogCanExecFailed(event: LogCanExecFailed): void {}
 
 export function handleLogExecReverted(event: LogExecReverted): void {
-  log.debug("HandleLogExecReverted {}", [
-    event.params.taskReceiptId.toString(),
-  ]);
   let taskReceiptWrapper = TaskReceiptWrapper.load(
     event.params.taskReceiptId.toHex()
   );
-  if (taskReceiptWrapper != null) {
-    taskReceiptWrapper.status = "execReverted";
-    taskReceiptWrapper.save();
-  }
+  taskReceiptWrapper.executionDate = event.block.timestamp;
+  taskReceiptWrapper.executionHash = event.transaction.hash;
+  taskReceiptWrapper.status = "execReverted";
+  taskReceiptWrapper.save();
 }
 
 export function handleLogExecSuccess(event: LogExecSuccess): void {
   let taskReceiptWrapper = TaskReceiptWrapper.load(
     event.params.taskReceiptId.toHex()
   );
-  if (taskReceiptWrapper != null) {
-    taskReceiptWrapper.status = "execSuccess";
-    taskReceiptWrapper.save();
-  }
+  taskReceiptWrapper.executionDate = event.block.timestamp;
+  taskReceiptWrapper.executionHash = event.transaction.hash;
+  taskReceiptWrapper.status = "execSuccess";
+  taskReceiptWrapper.save();
 }
 
 export function handleLogExecutorAssignedExecutor(
@@ -375,6 +238,7 @@ export function handleLogExecutorStaked(event: LogExecutorStaked): void {
   if (executor == null) {
     executor = new Executor(event.params.executor.toHex());
   }
+  executor.addr = event.params.executor;
   executor.save();
 }
 
@@ -406,9 +270,15 @@ export function handleLogOracleRequestDataSet(
   event: LogOracleRequestDataSet
 ): void {}
 
+// To DO: Update all outstanding! Task Receipt Wrappers of the provider to the new Executor
 export function handleLogProviderAssignedExecutor(
   event: LogProviderAssignedExecutor
-): void {}
+): void {
+  // let executor = gelatoCore.executorByProvider(
+  //   Address.fromString(provider.addr.toHexString())
+  // );
+  // taskReceiptWrapper.selectedExecutor = executor;
+}
 
 export function handleLogProviderModuleAdded(
   event: LogProviderModuleAdded
@@ -430,11 +300,10 @@ export function handleLogTaskCancelled(event: LogTaskCancelled): void {
   let taskReceiptWrapper = TaskReceiptWrapper.load(
     event.params.taskReceiptId.toHex()
   );
-
-  if (taskReceiptWrapper != null) {
-    taskReceiptWrapper.status = "cancelled";
-    taskReceiptWrapper.save();
-  }
+  taskReceiptWrapper.executionDate = event.block.timestamp;
+  taskReceiptWrapper.executionHash = event.transaction.hash;
+  taskReceiptWrapper.status = "canceled";
+  taskReceiptWrapper.save();
 }
 
 export function handleLogTaskSpecGasPriceCeilSet(

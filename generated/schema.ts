@@ -62,7 +62,7 @@ export class User extends Entity {
 
   get executor(): Bytes | null {
     let value = this.get("executor");
-    if (value === null) {
+    if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBytes();
@@ -164,7 +164,7 @@ export class TaskReceiptWrapper extends Entity {
 
   get executionDate(): BigInt | null {
     let value = this.get("executionDate");
-    if (value === null) {
+    if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBigInt();
@@ -181,7 +181,7 @@ export class TaskReceiptWrapper extends Entity {
 
   get executionHash(): Bytes | null {
     let value = this.get("executionHash");
-    if (value === null) {
+    if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toBytes();
@@ -265,7 +265,7 @@ export class TaskReceipt extends Entity {
 
   get tasks(): Array<string> | null {
     let value = this.get("tasks");
-    if (value === null) {
+    if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toStringArray();
@@ -338,21 +338,13 @@ export class TaskCycle extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get tasksReceipts(): Array<string> | null {
-    let value = this.get("tasksReceipts");
-    if (value === null) {
-      return null;
-    } else {
-      return value.toStringArray();
-    }
+  get taskReceiptWrappers(): Array<string> {
+    let value = this.get("taskReceiptWrappers");
+    return value.toStringArray();
   }
 
-  set tasksReceipts(value: Array<string> | null) {
-    if (value === null) {
-      this.unset("tasksReceipts");
-    } else {
-      this.set("tasksReceipts", Value.fromStringArray(value as Array<string>));
-    }
+  set taskReceiptWrappers(value: Array<string>) {
+    this.set("taskReceiptWrappers", Value.fromStringArray(value));
   }
 }
 
@@ -388,7 +380,7 @@ export class Task extends Entity {
 
   get conditions(): Array<string> | null {
     let value = this.get("conditions");
-    if (value === null) {
+    if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toStringArray();
@@ -405,7 +397,7 @@ export class Task extends Entity {
 
   get actions(): Array<string> | null {
     let value = this.get("actions");
-    if (value === null) {
+    if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
       return value.toStringArray();
@@ -594,22 +586,22 @@ export class Action extends Entity {
     this.set("data", Value.fromBytes(value));
   }
 
-  get operation(): string {
+  get operation(): BigInt {
     let value = this.get("operation");
-    return value.toString();
+    return value.toBigInt();
   }
 
-  set operation(value: string) {
-    this.set("operation", Value.fromString(value));
+  set operation(value: BigInt) {
+    this.set("operation", Value.fromBigInt(value));
   }
 
-  get dataFlow(): string {
+  get dataFlow(): BigInt {
     let value = this.get("dataFlow");
-    return value.toString();
+    return value.toBigInt();
   }
 
-  set dataFlow(value: string) {
-    this.set("dataFlow", Value.fromString(value));
+  set dataFlow(value: BigInt) {
+    this.set("dataFlow", Value.fromBigInt(value));
   }
 
   get value(): BigInt {
@@ -659,5 +651,14 @@ export class Executor extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get addr(): Bytes {
+    let value = this.get("addr");
+    return value.toBytes();
+  }
+
+  set addr(value: Bytes) {
+    this.set("addr", Value.fromBytes(value));
   }
 }

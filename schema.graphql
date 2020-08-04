@@ -23,7 +23,7 @@ enum TaskReceiptStatus {
   awaitingExec
   execSuccess
   execReverted
-  cancelled
+  canceled
   expired
 }
 
@@ -40,7 +40,7 @@ type TaskReceipt @entity {
 
 type TaskCycle @entity {
   id: ID!
-  tasksReceipts: [TaskReceipt!]
+  taskReceiptWrappers: [TaskReceiptWrapper!]!
 }
 
 type Task @entity {
@@ -68,14 +68,15 @@ type Action @entity {
   id: ID!
   addr: Bytes!
   data: Bytes!
-  operation: Operation!
-  dataFlow: DataFlow!
+  operation: BigInt!
+  dataFlow: BigInt!
   value: BigInt!
   termsOkCheck: Boolean!
 }
 
 type Executor @entity {
   id: ID!
+  addr: Bytes!
 }
 
 enum Operation {

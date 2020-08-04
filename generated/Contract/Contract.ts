@@ -1482,7 +1482,7 @@ export class Contract extends ethereum.SmartContract {
   ): string {
     let result = super.call(
       "canExec",
-      "canExec((uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256),uint256,uint256):(string)",
+      "canExec((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256),uint256,uint256):(string)",
       [
         ethereum.Value.fromTuple(_TR),
         ethereum.Value.fromUnsignedBigInt(_gasLimit),
@@ -1500,7 +1500,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "canExec",
-      "canExec((uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256),uint256,uint256):(string)",
+      "canExec((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256),uint256,uint256):(string)",
       [
         ethereum.Value.fromTuple(_TR),
         ethereum.Value.fromUnsignedBigInt(_gasLimit),
@@ -1522,7 +1522,7 @@ export class Contract extends ethereum.SmartContract {
   ): string {
     let result = super.call(
       "canSubmitTask",
-      "canSubmitTask(address,(address,address),(tuple[],tuple[],uint256,uint256),uint256):(string)",
+      "canSubmitTask(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256),uint256):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -1542,7 +1542,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "canSubmitTask",
-      "canSubmitTask(address,(address,address),(tuple[],tuple[],uint256,uint256),uint256):(string)",
+      "canSubmitTask(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256),uint256):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -1587,7 +1587,7 @@ export class Contract extends ethereum.SmartContract {
   ): Contract__executionWrapperResult {
     let result = super.call(
       "executionWrapper",
-      "executionWrapper((uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256),uint256,uint256):(uint8,string)",
+      "executionWrapper((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256),uint256,uint256):(uint8,string)",
       [
         ethereum.Value.fromTuple(taskReceipt),
         ethereum.Value.fromUnsignedBigInt(_gasLimit),
@@ -1608,7 +1608,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<Contract__executionWrapperResult> {
     let result = super.tryCall(
       "executionWrapper",
-      "executionWrapper((uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256),uint256,uint256):(uint8,string)",
+      "executionWrapper((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256),uint256,uint256):(uint8,string)",
       [
         ethereum.Value.fromTuple(taskReceipt),
         ethereum.Value.fromUnsignedBigInt(_gasLimit),
@@ -1792,7 +1792,7 @@ export class Contract extends ethereum.SmartContract {
   hashTaskReceipt(_TR: Contract__hashTaskReceiptInput_TRStruct): Bytes {
     let result = super.call(
       "hashTaskReceipt",
-      "hashTaskReceipt((uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256)):(bytes32)",
+      "hashTaskReceipt((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256)):(bytes32)",
       [ethereum.Value.fromTuple(_TR)]
     );
 
@@ -1804,7 +1804,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
       "hashTaskReceipt",
-      "hashTaskReceipt((uint256,address,(address,address),uint256,tuple[],uint256,uint256,uint256)):(bytes32)",
+      "hashTaskReceipt((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256)):(bytes32)",
       [ethereum.Value.fromTuple(_TR)]
     );
     if (result.reverted) {
@@ -1817,7 +1817,7 @@ export class Contract extends ethereum.SmartContract {
   hashTaskSpec(_taskSpec: Contract__hashTaskSpecInput_taskSpecStruct): Bytes {
     let result = super.call(
       "hashTaskSpec",
-      "hashTaskSpec((address[],tuple[],uint256)):(bytes32)",
+      "hashTaskSpec((address[],(address,bytes,uint8,uint8,uint256,bool)[],uint256)):(bytes32)",
       [ethereum.Value.fromTuple(_taskSpec)]
     );
 
@@ -1829,7 +1829,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
       "hashTaskSpec",
-      "hashTaskSpec((address[],tuple[],uint256)):(bytes32)",
+      "hashTaskSpec((address[],(address,bytes,uint8,uint8,uint256,bool)[],uint256)):(bytes32)",
       [ethereum.Value.fromTuple(_taskSpec)]
     );
     if (result.reverted) {
@@ -2001,7 +2001,7 @@ export class Contract extends ethereum.SmartContract {
   ): string {
     let result = super.call(
       "isTaskProvided",
-      "isTaskProvided(address,(address,address),(tuple[],tuple[],uint256,uint256)):(string)",
+      "isTaskProvided(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -2019,7 +2019,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "isTaskProvided",
-      "isTaskProvided(address,(address,address),(tuple[],tuple[],uint256,uint256)):(string)",
+      "isTaskProvided(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -2039,7 +2039,7 @@ export class Contract extends ethereum.SmartContract {
   ): string {
     let result = super.call(
       "isTaskSpecProvided",
-      "isTaskSpecProvided(address,(address[],tuple[],uint256)):(string)",
+      "isTaskSpecProvided(address,(address[],(address,bytes,uint8,uint8,uint256,bool)[],uint256)):(string)",
       [
         ethereum.Value.fromAddress(_provider),
         ethereum.Value.fromTuple(_taskSpec)
@@ -2055,7 +2055,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "isTaskSpecProvided",
-      "isTaskSpecProvided(address,(address[],tuple[],uint256)):(string)",
+      "isTaskSpecProvided(address,(address[],(address,bytes,uint8,uint8,uint256,bool)[],uint256)):(string)",
       [
         ethereum.Value.fromAddress(_provider),
         ethereum.Value.fromTuple(_taskSpec)
@@ -2169,7 +2169,7 @@ export class Contract extends ethereum.SmartContract {
   ): string {
     let result = super.call(
       "providerCanExec",
-      "providerCanExec(address,(address,address),(tuple[],tuple[],uint256,uint256),uint256):(string)",
+      "providerCanExec(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256),uint256):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -2189,7 +2189,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "providerCanExec",
-      "providerCanExec(address,(address,address),(tuple[],tuple[],uint256,uint256),uint256):(string)",
+      "providerCanExec(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256),uint256):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -2234,7 +2234,7 @@ export class Contract extends ethereum.SmartContract {
   ): string {
     let result = super.call(
       "providerModuleChecks",
-      "providerModuleChecks(address,(address,address),(tuple[],tuple[],uint256,uint256)):(string)",
+      "providerModuleChecks(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
@@ -2252,7 +2252,7 @@ export class Contract extends ethereum.SmartContract {
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "providerModuleChecks",
-      "providerModuleChecks(address,(address,address),(tuple[],tuple[],uint256,uint256)):(string)",
+      "providerModuleChecks(address,(address,address),((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)):(string)",
       [
         ethereum.Value.fromAddress(_userProxy),
         ethereum.Value.fromTuple(_provider),
