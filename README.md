@@ -59,6 +59,6 @@ You can query every all `TaskReceiptWrappers` of a single User, in this case add
 }
 ```
 
-## Questions:
+## Help
 
 If you have questions, feel free to shoot us a message in our [Telegram](https://t.me/joinchat/HbZmeE1JoKF92g_idVz6nA) or [Discord](https://discord.gg/Avmrfg7) channels!
