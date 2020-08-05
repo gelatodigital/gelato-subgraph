@@ -5,6 +5,7 @@ This repository contains the schemas & event handlers that compose Gelato's Subg
 The respective smart contract can be found [here](https://github.com/gelatodigital/gelato-network/blob/master/contracts/gelato_core/GelatoCore.sol).
 
 This Subraph is available on the following Networks:
+
 - [Mainnet](https://thegraph.com/explorer/subgraph/gelatodigital/gelato-network)
 - [Rinkeby](https://thegraph.com/explorer/subgraph/gelatodigital/gelato-network-rinkeby)
 
@@ -20,7 +21,10 @@ You can query every all `TaskReceiptWrappers` of a single User, in this case add
 
 ```graphql
 {
-  taskReceiptWrappers(where: {user: "0xb0511d19216320e0612746cb24943300b03955f3"}) {
+  taskReceiptWrappers(
+    where: { user: "0xb0511d19216320e0612746cb24943300b03955f3" }
+  ) {
+    id
     taskReceipt {
       id
       userProxy
