@@ -16,7 +16,7 @@ On gelato, a user can submit a [Task](https://github.com/gelatodigital/gelato-ne
 
 Gelato's Subgraph provide you with an API to query `Task Receipt Wrappers`, which basically contain a `Task Receipt`, plus additional information around its current status, transactions hashes, timestamps when it was submitted & executed and whether the User pays for the Task direcly (being a self-provider) or has someone else paying for him (external provider).
 
-You can query every all `TaskReceiptWrappers` of a single User, in this case address `0xb0511d19216320e0612746cb24943300b03955f3` like this:
+You can query every all `TaskReceiptWrappers` of a single User, in this case address `0xb0511d19216320e0612746cb24943300b03955f3` like this (make sure the address you're inputting is **lowercase**):
 
 ```graphql
 {
