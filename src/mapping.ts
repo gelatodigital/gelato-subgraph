@@ -169,7 +169,7 @@ export function handleLogTaskSubmitted(event: LogTaskSubmitted): void {
 
   // // ==== Create TaskReceiptWrapper === \\
   let taskReceiptWrapper = new TaskReceiptWrapper(
-    event.params.taskReceiptId.toHex()
+    event.params.taskReceiptId.toString()
   );
   taskReceiptWrapper.user = user.id;
   taskReceiptWrapper.taskReceipt = taskReceipt.id;
@@ -207,7 +207,7 @@ export function handleLogCanExecFailed(event: LogCanExecFailed): void {}
 
 export function handleLogExecReverted(event: LogExecReverted): void {
   let taskReceiptWrapper = TaskReceiptWrapper.load(
-    event.params.taskReceiptId.toHex()
+    event.params.taskReceiptId.toString()
   );
   taskReceiptWrapper.executionDate = event.block.timestamp;
   taskReceiptWrapper.executionHash = event.transaction.hash;
@@ -217,7 +217,7 @@ export function handleLogExecReverted(event: LogExecReverted): void {
 
 export function handleLogExecSuccess(event: LogExecSuccess): void {
   let taskReceiptWrapper = TaskReceiptWrapper.load(
-    event.params.taskReceiptId.toHex()
+    event.params.taskReceiptId.toString()
   );
   taskReceiptWrapper.executionDate = event.block.timestamp;
   taskReceiptWrapper.executionHash = event.transaction.hash;
@@ -298,7 +298,7 @@ export function handleLogSysAdminSuccessShareSet(
 
 export function handleLogTaskCancelled(event: LogTaskCancelled): void {
   let taskReceiptWrapper = TaskReceiptWrapper.load(
-    event.params.taskReceiptId.toHex()
+    event.params.taskReceiptId.toString()
   );
   taskReceiptWrapper.executionDate = event.block.timestamp;
   taskReceiptWrapper.executionHash = event.transaction.hash;
