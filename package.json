@@ -7,10 +7,11 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ gelatodigital/gelato-network",
     "create-local": "graph create --node http://localhost:8020/ gelatodigital/gelato-network",
     "remove-local": "graph remove --node http://localhost:8020/ gelatodigital/gelato-network",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gelatodigital/gelato-network"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gelatodigital/gelato-network",
+    "deploy-mainnet": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ gelatodigital/gelato-network"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "http://github.com/graphprotocol/graph-cli#master",
-    "@graphprotocol/graph-ts": "0.18.0"
+    "@graphprotocol/graph-cli": "0.19.0",
+    "@graphprotocol/graph-ts": "0.19.0"
   }
 }
