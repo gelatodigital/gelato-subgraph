@@ -1,3 +1,25 @@
+########## GELATO KRYSTAL ##########
+type GelatoKrystalTask @entity {
+  id: ID!
+  status: TaskReceiptStatus!
+  user: User!
+  inToken: Bytes!
+  outToken: Bytes!
+  amountPerTrade: BigInt!
+  nTradesLeft: BigInt!
+  minSlippage: BigInt!
+  maxSlippage: BigInt!
+  lastExecutionTime: BigInt!
+  delay: BigInt!
+  gasPriceCeil: BigInt!
+  submissionDate: BigInt!
+  submissionHash: Bytes!
+  executionDate: BigInt
+  executionHash: Bytes
+  executor: Executor
+}
+
+########## GELATO CORE ##########
 type User @entity {
   id: ID!
   address: Bytes!

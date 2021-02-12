@@ -12,6 +12,205 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class GelatoKrystalTask extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save GelatoKrystalTask entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save GelatoKrystalTask entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("GelatoKrystalTask", id.toString(), this);
+  }
+
+  static load(id: string): GelatoKrystalTask | null {
+    return store.get("GelatoKrystalTask", id) as GelatoKrystalTask | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get status(): string {
+    let value = this.get("status");
+    return value.toString();
+  }
+
+  set status(value: string) {
+    this.set("status", Value.fromString(value));
+  }
+
+  get user(): string {
+    let value = this.get("user");
+    return value.toString();
+  }
+
+  set user(value: string) {
+    this.set("user", Value.fromString(value));
+  }
+
+  get inToken(): Bytes {
+    let value = this.get("inToken");
+    return value.toBytes();
+  }
+
+  set inToken(value: Bytes) {
+    this.set("inToken", Value.fromBytes(value));
+  }
+
+  get outToken(): Bytes {
+    let value = this.get("outToken");
+    return value.toBytes();
+  }
+
+  set outToken(value: Bytes) {
+    this.set("outToken", Value.fromBytes(value));
+  }
+
+  get amountPerTrade(): BigInt {
+    let value = this.get("amountPerTrade");
+    return value.toBigInt();
+  }
+
+  set amountPerTrade(value: BigInt) {
+    this.set("amountPerTrade", Value.fromBigInt(value));
+  }
+
+  get nTradesLeft(): BigInt {
+    let value = this.get("nTradesLeft");
+    return value.toBigInt();
+  }
+
+  set nTradesLeft(value: BigInt) {
+    this.set("nTradesLeft", Value.fromBigInt(value));
+  }
+
+  get minSlippage(): BigInt {
+    let value = this.get("minSlippage");
+    return value.toBigInt();
+  }
+
+  set minSlippage(value: BigInt) {
+    this.set("minSlippage", Value.fromBigInt(value));
+  }
+
+  get maxSlippage(): BigInt {
+    let value = this.get("maxSlippage");
+    return value.toBigInt();
+  }
+
+  set maxSlippage(value: BigInt) {
+    this.set("maxSlippage", Value.fromBigInt(value));
+  }
+
+  get lastExecutionTime(): BigInt {
+    let value = this.get("lastExecutionTime");
+    return value.toBigInt();
+  }
+
+  set lastExecutionTime(value: BigInt) {
+    this.set("lastExecutionTime", Value.fromBigInt(value));
+  }
+
+  get delay(): BigInt {
+    let value = this.get("delay");
+    return value.toBigInt();
+  }
+
+  set delay(value: BigInt) {
+    this.set("delay", Value.fromBigInt(value));
+  }
+
+  get gasPriceCeil(): BigInt {
+    let value = this.get("gasPriceCeil");
+    return value.toBigInt();
+  }
+
+  set gasPriceCeil(value: BigInt) {
+    this.set("gasPriceCeil", Value.fromBigInt(value));
+  }
+
+  get submissionDate(): BigInt {
+    let value = this.get("submissionDate");
+    return value.toBigInt();
+  }
+
+  set submissionDate(value: BigInt) {
+    this.set("submissionDate", Value.fromBigInt(value));
+  }
+
+  get submissionHash(): Bytes {
+    let value = this.get("submissionHash");
+    return value.toBytes();
+  }
+
+  set submissionHash(value: Bytes) {
+    this.set("submissionHash", Value.fromBytes(value));
+  }
+
+  get executionDate(): BigInt | null {
+    let value = this.get("executionDate");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set executionDate(value: BigInt | null) {
+    if (value === null) {
+      this.unset("executionDate");
+    } else {
+      this.set("executionDate", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get executionHash(): Bytes | null {
+    let value = this.get("executionHash");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set executionHash(value: Bytes | null) {
+    if (value === null) {
+      this.unset("executionHash");
+    } else {
+      this.set("executionHash", Value.fromBytes(value as Bytes));
+    }
+  }
+
+  get executor(): string | null {
+    let value = this.get("executor");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set executor(value: string | null) {
+    if (value === null) {
+      this.unset("executor");
+    } else {
+      this.set("executor", Value.fromString(value as string));
+    }
+  }
+}
+
 export class User extends Entity {
   constructor(id: string) {
     super();

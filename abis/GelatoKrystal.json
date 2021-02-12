@@ -1,0 +1,891 @@
+[
+    {
+      "inputs": [
+        {
+          "internalType": "contract ISmartWalletSwapImplementation",
+          "name": "_smartWalletSwap",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "_uniRouterV2",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "_sushiRouterV2",
+          "type": "address"
+        },
+        {
+          "internalType": "address payable",
+          "name": "_platformWallet",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "gelatoAddressStorage",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "executor",
+          "type": "address"
+        }
+      ],
+      "name": "LogExecSuccess",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "order",
+          "type": "tuple"
+        }
+      ],
+      "name": "LogTaskCanceled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "remover",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "taskHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "LogTaskRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "LogTaskStored",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "order",
+          "type": "tuple"
+        }
+      ],
+      "name": "LogTaskSubmitted",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "HINT",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "PLATFORM_FEE_BPS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "_order",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancel",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentTaskId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "_order",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "execKyber",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "_order",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_uniswapTradePath",
+          "type": "address[]"
+        },
+        {
+          "internalType": "bool",
+          "name": "isUni",
+          "type": "bool"
+        }
+      ],
+      "name": "execUniOrSushi",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "executor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "gelatoAS",
+      "outputs": [
+        {
+          "internalType": "contract GelatoAddressStorage",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getGasPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "_order",
+          "type": "tuple"
+        }
+      ],
+      "name": "getMinReturn",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "minReturn",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_bytesBlob",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_taskId",
+          "type": "uint256"
+        }
+      ],
+      "name": "hashTask",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "inToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "outToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountPerTrade",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nTradesLeft",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSlippage",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "gasPriceCeil",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lastExecutionTime",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct GelatoKrystal.Order",
+          "name": "_order",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "isTaskSubmitted",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "platformWallet",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "serviceRegistry",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "smartWalletSwap",
+      "outputs": [
+        {
+          "internalType": "contract ISmartWalletSwapImplementation",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "inToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "outToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountPerTrade",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nTradesLeft",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minSlippage",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxSlippage",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "delay",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasPriceCeil",
+          "type": "uint256"
+        }
+      ],
+      "name": "submit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "sushiRouterV2",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "taskId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "taskOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "uniRouterV2",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_bytesBlob",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "verifyTask",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+]

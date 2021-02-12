@@ -740,7 +740,7 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class Contract__canExecInput_TRStruct extends ethereum.Tuple {
+export class GelatoCore__canExecInput_TRStruct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -749,16 +749,16 @@ export class Contract__canExecInput_TRStruct extends ethereum.Tuple {
     return this[1].toAddress();
   }
 
-  get provider(): Contract__canExecInput_TRProviderStruct {
-    return this[2].toTuple() as Contract__canExecInput_TRProviderStruct;
+  get provider(): GelatoCore__canExecInput_TRProviderStruct {
+    return this[2].toTuple() as GelatoCore__canExecInput_TRProviderStruct;
   }
 
   get index(): BigInt {
     return this[3].toBigInt();
   }
 
-  get tasks(): Array<Contract__canExecInput_TRTasksStruct> {
-    return this[4].toTupleArray<Contract__canExecInput_TRTasksStruct>();
+  get tasks(): Array<GelatoCore__canExecInput_TRTasksStruct> {
+    return this[4].toTupleArray<GelatoCore__canExecInput_TRTasksStruct>();
   }
 
   get expiryDate(): BigInt {
@@ -774,7 +774,7 @@ export class Contract__canExecInput_TRStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__canExecInput_TRProviderStruct extends ethereum.Tuple {
+export class GelatoCore__canExecInput_TRProviderStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -784,82 +784,16 @@ export class Contract__canExecInput_TRProviderStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__canExecInput_TRTasksStruct extends ethereum.Tuple {
-  get conditions(): Array<Contract__canExecInput_TRTasksConditionsStruct> {
+export class GelatoCore__canExecInput_TRTasksStruct extends ethereum.Tuple {
+  get conditions(): Array<GelatoCore__canExecInput_TRTasksConditionsStruct> {
     return this[0].toTupleArray<
-      Contract__canExecInput_TRTasksConditionsStruct
+      GelatoCore__canExecInput_TRTasksConditionsStruct
     >();
   }
 
-  get actions(): Array<Contract__canExecInput_TRTasksActionsStruct> {
-    return this[1].toTupleArray<Contract__canExecInput_TRTasksActionsStruct>();
-  }
-
-  get selfProviderGasLimit(): BigInt {
-    return this[2].toBigInt();
-  }
-
-  get selfProviderGasPriceCeil(): BigInt {
-    return this[3].toBigInt();
-  }
-}
-
-export class Contract__canExecInput_TRTasksConditionsStruct extends ethereum.Tuple {
-  get inst(): Address {
-    return this[0].toAddress();
-  }
-
-  get data(): Bytes {
-    return this[1].toBytes();
-  }
-}
-
-export class Contract__canExecInput_TRTasksActionsStruct extends ethereum.Tuple {
-  get addr(): Address {
-    return this[0].toAddress();
-  }
-
-  get data(): Bytes {
-    return this[1].toBytes();
-  }
-
-  get operation(): i32 {
-    return this[2].toI32();
-  }
-
-  get dataFlow(): i32 {
-    return this[3].toI32();
-  }
-
-  get value(): BigInt {
-    return this[4].toBigInt();
-  }
-
-  get termsOkCheck(): boolean {
-    return this[5].toBoolean();
-  }
-}
-
-export class Contract__canSubmitTaskInput_providerStruct extends ethereum.Tuple {
-  get addr(): Address {
-    return this[0].toAddress();
-  }
-
-  get module(): Address {
-    return this[1].toAddress();
-  }
-}
-
-export class Contract__canSubmitTaskInput_taskStruct extends ethereum.Tuple {
-  get conditions(): Array<Contract__canSubmitTaskInput_taskConditionsStruct> {
-    return this[0].toTupleArray<
-      Contract__canSubmitTaskInput_taskConditionsStruct
-    >();
-  }
-
-  get actions(): Array<Contract__canSubmitTaskInput_taskActionsStruct> {
+  get actions(): Array<GelatoCore__canExecInput_TRTasksActionsStruct> {
     return this[1].toTupleArray<
-      Contract__canSubmitTaskInput_taskActionsStruct
+      GelatoCore__canExecInput_TRTasksActionsStruct
     >();
   }
 
@@ -872,7 +806,7 @@ export class Contract__canSubmitTaskInput_taskStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__canSubmitTaskInput_taskConditionsStruct extends ethereum.Tuple {
+export class GelatoCore__canExecInput_TRTasksConditionsStruct extends ethereum.Tuple {
   get inst(): Address {
     return this[0].toAddress();
   }
@@ -882,7 +816,7 @@ export class Contract__canSubmitTaskInput_taskConditionsStruct extends ethereum.
   }
 }
 
-export class Contract__canSubmitTaskInput_taskActionsStruct extends ethereum.Tuple {
+export class GelatoCore__canExecInput_TRTasksActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -908,7 +842,75 @@ export class Contract__canSubmitTaskInput_taskActionsStruct extends ethereum.Tup
   }
 }
 
-export class Contract__executionWrapperResult {
+export class GelatoCore__canSubmitTaskInput_providerStruct extends ethereum.Tuple {
+  get addr(): Address {
+    return this[0].toAddress();
+  }
+
+  get module(): Address {
+    return this[1].toAddress();
+  }
+}
+
+export class GelatoCore__canSubmitTaskInput_taskStruct extends ethereum.Tuple {
+  get conditions(): Array<GelatoCore__canSubmitTaskInput_taskConditionsStruct> {
+    return this[0].toTupleArray<
+      GelatoCore__canSubmitTaskInput_taskConditionsStruct
+    >();
+  }
+
+  get actions(): Array<GelatoCore__canSubmitTaskInput_taskActionsStruct> {
+    return this[1].toTupleArray<
+      GelatoCore__canSubmitTaskInput_taskActionsStruct
+    >();
+  }
+
+  get selfProviderGasLimit(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get selfProviderGasPriceCeil(): BigInt {
+    return this[3].toBigInt();
+  }
+}
+
+export class GelatoCore__canSubmitTaskInput_taskConditionsStruct extends ethereum.Tuple {
+  get inst(): Address {
+    return this[0].toAddress();
+  }
+
+  get data(): Bytes {
+    return this[1].toBytes();
+  }
+}
+
+export class GelatoCore__canSubmitTaskInput_taskActionsStruct extends ethereum.Tuple {
+  get addr(): Address {
+    return this[0].toAddress();
+  }
+
+  get data(): Bytes {
+    return this[1].toBytes();
+  }
+
+  get operation(): i32 {
+    return this[2].toI32();
+  }
+
+  get dataFlow(): i32 {
+    return this[3].toI32();
+  }
+
+  get value(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get termsOkCheck(): boolean {
+    return this[5].toBoolean();
+  }
+}
+
+export class GelatoCore__executionWrapperResult {
   value0: i32;
   value1: string;
 
@@ -928,7 +930,7 @@ export class Contract__executionWrapperResult {
   }
 }
 
-export class Contract__executionWrapperInputTaskReceiptStruct extends ethereum.Tuple {
+export class GelatoCore__executionWrapperInputTaskReceiptStruct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -937,17 +939,17 @@ export class Contract__executionWrapperInputTaskReceiptStruct extends ethereum.T
     return this[1].toAddress();
   }
 
-  get provider(): Contract__executionWrapperInputTaskReceiptProviderStruct {
-    return this[2].toTuple() as Contract__executionWrapperInputTaskReceiptProviderStruct;
+  get provider(): GelatoCore__executionWrapperInputTaskReceiptProviderStruct {
+    return this[2].toTuple() as GelatoCore__executionWrapperInputTaskReceiptProviderStruct;
   }
 
   get index(): BigInt {
     return this[3].toBigInt();
   }
 
-  get tasks(): Array<Contract__executionWrapperInputTaskReceiptTasksStruct> {
+  get tasks(): Array<GelatoCore__executionWrapperInputTaskReceiptTasksStruct> {
     return this[4].toTupleArray<
-      Contract__executionWrapperInputTaskReceiptTasksStruct
+      GelatoCore__executionWrapperInputTaskReceiptTasksStruct
     >();
   }
 
@@ -964,7 +966,7 @@ export class Contract__executionWrapperInputTaskReceiptStruct extends ethereum.T
   }
 }
 
-export class Contract__executionWrapperInputTaskReceiptProviderStruct extends ethereum.Tuple {
+export class GelatoCore__executionWrapperInputTaskReceiptProviderStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -974,20 +976,20 @@ export class Contract__executionWrapperInputTaskReceiptProviderStruct extends et
   }
 }
 
-export class Contract__executionWrapperInputTaskReceiptTasksStruct extends ethereum.Tuple {
+export class GelatoCore__executionWrapperInputTaskReceiptTasksStruct extends ethereum.Tuple {
   get conditions(): Array<
-    Contract__executionWrapperInputTaskReceiptTasksConditionsStruct
+    GelatoCore__executionWrapperInputTaskReceiptTasksConditionsStruct
   > {
     return this[0].toTupleArray<
-      Contract__executionWrapperInputTaskReceiptTasksConditionsStruct
+      GelatoCore__executionWrapperInputTaskReceiptTasksConditionsStruct
     >();
   }
 
   get actions(): Array<
-    Contract__executionWrapperInputTaskReceiptTasksActionsStruct
+    GelatoCore__executionWrapperInputTaskReceiptTasksActionsStruct
   > {
     return this[1].toTupleArray<
-      Contract__executionWrapperInputTaskReceiptTasksActionsStruct
+      GelatoCore__executionWrapperInputTaskReceiptTasksActionsStruct
     >();
   }
 
@@ -1000,7 +1002,7 @@ export class Contract__executionWrapperInputTaskReceiptTasksStruct extends ether
   }
 }
 
-export class Contract__executionWrapperInputTaskReceiptTasksConditionsStruct extends ethereum.Tuple {
+export class GelatoCore__executionWrapperInputTaskReceiptTasksConditionsStruct extends ethereum.Tuple {
   get inst(): Address {
     return this[0].toAddress();
   }
@@ -1010,7 +1012,7 @@ export class Contract__executionWrapperInputTaskReceiptTasksConditionsStruct ext
   }
 }
 
-export class Contract__executionWrapperInputTaskReceiptTasksActionsStruct extends ethereum.Tuple {
+export class GelatoCore__executionWrapperInputTaskReceiptTasksActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1036,7 +1038,7 @@ export class Contract__executionWrapperInputTaskReceiptTasksActionsStruct extend
   }
 }
 
-export class Contract__hashTaskReceiptInput_TRStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskReceiptInput_TRStruct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -1045,16 +1047,18 @@ export class Contract__hashTaskReceiptInput_TRStruct extends ethereum.Tuple {
     return this[1].toAddress();
   }
 
-  get provider(): Contract__hashTaskReceiptInput_TRProviderStruct {
-    return this[2].toTuple() as Contract__hashTaskReceiptInput_TRProviderStruct;
+  get provider(): GelatoCore__hashTaskReceiptInput_TRProviderStruct {
+    return this[2].toTuple() as GelatoCore__hashTaskReceiptInput_TRProviderStruct;
   }
 
   get index(): BigInt {
     return this[3].toBigInt();
   }
 
-  get tasks(): Array<Contract__hashTaskReceiptInput_TRTasksStruct> {
-    return this[4].toTupleArray<Contract__hashTaskReceiptInput_TRTasksStruct>();
+  get tasks(): Array<GelatoCore__hashTaskReceiptInput_TRTasksStruct> {
+    return this[4].toTupleArray<
+      GelatoCore__hashTaskReceiptInput_TRTasksStruct
+    >();
   }
 
   get expiryDate(): BigInt {
@@ -1070,7 +1074,7 @@ export class Contract__hashTaskReceiptInput_TRStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__hashTaskReceiptInput_TRProviderStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskReceiptInput_TRProviderStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1080,18 +1084,18 @@ export class Contract__hashTaskReceiptInput_TRProviderStruct extends ethereum.Tu
   }
 }
 
-export class Contract__hashTaskReceiptInput_TRTasksStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskReceiptInput_TRTasksStruct extends ethereum.Tuple {
   get conditions(): Array<
-    Contract__hashTaskReceiptInput_TRTasksConditionsStruct
+    GelatoCore__hashTaskReceiptInput_TRTasksConditionsStruct
   > {
     return this[0].toTupleArray<
-      Contract__hashTaskReceiptInput_TRTasksConditionsStruct
+      GelatoCore__hashTaskReceiptInput_TRTasksConditionsStruct
     >();
   }
 
-  get actions(): Array<Contract__hashTaskReceiptInput_TRTasksActionsStruct> {
+  get actions(): Array<GelatoCore__hashTaskReceiptInput_TRTasksActionsStruct> {
     return this[1].toTupleArray<
-      Contract__hashTaskReceiptInput_TRTasksActionsStruct
+      GelatoCore__hashTaskReceiptInput_TRTasksActionsStruct
     >();
   }
 
@@ -1104,7 +1108,7 @@ export class Contract__hashTaskReceiptInput_TRTasksStruct extends ethereum.Tuple
   }
 }
 
-export class Contract__hashTaskReceiptInput_TRTasksConditionsStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskReceiptInput_TRTasksConditionsStruct extends ethereum.Tuple {
   get inst(): Address {
     return this[0].toAddress();
   }
@@ -1114,7 +1118,7 @@ export class Contract__hashTaskReceiptInput_TRTasksConditionsStruct extends ethe
   }
 }
 
-export class Contract__hashTaskReceiptInput_TRTasksActionsStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskReceiptInput_TRTasksActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1140,14 +1144,14 @@ export class Contract__hashTaskReceiptInput_TRTasksActionsStruct extends ethereu
   }
 }
 
-export class Contract__hashTaskSpecInput_taskSpecStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskSpecInput_taskSpecStruct extends ethereum.Tuple {
   get conditions(): Array<Address> {
     return this[0].toAddressArray();
   }
 
-  get actions(): Array<Contract__hashTaskSpecInput_taskSpecActionsStruct> {
+  get actions(): Array<GelatoCore__hashTaskSpecInput_taskSpecActionsStruct> {
     return this[1].toTupleArray<
-      Contract__hashTaskSpecInput_taskSpecActionsStruct
+      GelatoCore__hashTaskSpecInput_taskSpecActionsStruct
     >();
   }
 
@@ -1156,7 +1160,7 @@ export class Contract__hashTaskSpecInput_taskSpecStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__hashTaskSpecInput_taskSpecActionsStruct extends ethereum.Tuple {
+export class GelatoCore__hashTaskSpecInput_taskSpecActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1182,7 +1186,7 @@ export class Contract__hashTaskSpecInput_taskSpecActionsStruct extends ethereum.
   }
 }
 
-export class Contract__isTaskProvidedInput_providerStruct extends ethereum.Tuple {
+export class GelatoCore__isTaskProvidedInput_providerStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1192,16 +1196,18 @@ export class Contract__isTaskProvidedInput_providerStruct extends ethereum.Tuple
   }
 }
 
-export class Contract__isTaskProvidedInput_taskStruct extends ethereum.Tuple {
-  get conditions(): Array<Contract__isTaskProvidedInput_taskConditionsStruct> {
+export class GelatoCore__isTaskProvidedInput_taskStruct extends ethereum.Tuple {
+  get conditions(): Array<
+    GelatoCore__isTaskProvidedInput_taskConditionsStruct
+  > {
     return this[0].toTupleArray<
-      Contract__isTaskProvidedInput_taskConditionsStruct
+      GelatoCore__isTaskProvidedInput_taskConditionsStruct
     >();
   }
 
-  get actions(): Array<Contract__isTaskProvidedInput_taskActionsStruct> {
+  get actions(): Array<GelatoCore__isTaskProvidedInput_taskActionsStruct> {
     return this[1].toTupleArray<
-      Contract__isTaskProvidedInput_taskActionsStruct
+      GelatoCore__isTaskProvidedInput_taskActionsStruct
     >();
   }
 
@@ -1214,7 +1220,7 @@ export class Contract__isTaskProvidedInput_taskStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__isTaskProvidedInput_taskConditionsStruct extends ethereum.Tuple {
+export class GelatoCore__isTaskProvidedInput_taskConditionsStruct extends ethereum.Tuple {
   get inst(): Address {
     return this[0].toAddress();
   }
@@ -1224,7 +1230,7 @@ export class Contract__isTaskProvidedInput_taskConditionsStruct extends ethereum
   }
 }
 
-export class Contract__isTaskProvidedInput_taskActionsStruct extends ethereum.Tuple {
+export class GelatoCore__isTaskProvidedInput_taskActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1250,16 +1256,16 @@ export class Contract__isTaskProvidedInput_taskActionsStruct extends ethereum.Tu
   }
 }
 
-export class Contract__isTaskSpecProvidedInput_taskSpecStruct extends ethereum.Tuple {
+export class GelatoCore__isTaskSpecProvidedInput_taskSpecStruct extends ethereum.Tuple {
   get conditions(): Array<Address> {
     return this[0].toAddressArray();
   }
 
   get actions(): Array<
-    Contract__isTaskSpecProvidedInput_taskSpecActionsStruct
+    GelatoCore__isTaskSpecProvidedInput_taskSpecActionsStruct
   > {
     return this[1].toTupleArray<
-      Contract__isTaskSpecProvidedInput_taskSpecActionsStruct
+      GelatoCore__isTaskSpecProvidedInput_taskSpecActionsStruct
     >();
   }
 
@@ -1268,7 +1274,7 @@ export class Contract__isTaskSpecProvidedInput_taskSpecStruct extends ethereum.T
   }
 }
 
-export class Contract__isTaskSpecProvidedInput_taskSpecActionsStruct extends ethereum.Tuple {
+export class GelatoCore__isTaskSpecProvidedInput_taskSpecActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1294,7 +1300,7 @@ export class Contract__isTaskSpecProvidedInput_taskSpecActionsStruct extends eth
   }
 }
 
-export class Contract__providerCanExecInput_providerStruct extends ethereum.Tuple {
+export class GelatoCore__providerCanExecInput_providerStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1304,86 +1310,18 @@ export class Contract__providerCanExecInput_providerStruct extends ethereum.Tupl
   }
 }
 
-export class Contract__providerCanExecInput_taskStruct extends ethereum.Tuple {
-  get conditions(): Array<Contract__providerCanExecInput_taskConditionsStruct> {
-    return this[0].toTupleArray<
-      Contract__providerCanExecInput_taskConditionsStruct
-    >();
-  }
-
-  get actions(): Array<Contract__providerCanExecInput_taskActionsStruct> {
-    return this[1].toTupleArray<
-      Contract__providerCanExecInput_taskActionsStruct
-    >();
-  }
-
-  get selfProviderGasLimit(): BigInt {
-    return this[2].toBigInt();
-  }
-
-  get selfProviderGasPriceCeil(): BigInt {
-    return this[3].toBigInt();
-  }
-}
-
-export class Contract__providerCanExecInput_taskConditionsStruct extends ethereum.Tuple {
-  get inst(): Address {
-    return this[0].toAddress();
-  }
-
-  get data(): Bytes {
-    return this[1].toBytes();
-  }
-}
-
-export class Contract__providerCanExecInput_taskActionsStruct extends ethereum.Tuple {
-  get addr(): Address {
-    return this[0].toAddress();
-  }
-
-  get data(): Bytes {
-    return this[1].toBytes();
-  }
-
-  get operation(): i32 {
-    return this[2].toI32();
-  }
-
-  get dataFlow(): i32 {
-    return this[3].toI32();
-  }
-
-  get value(): BigInt {
-    return this[4].toBigInt();
-  }
-
-  get termsOkCheck(): boolean {
-    return this[5].toBoolean();
-  }
-}
-
-export class Contract__providerModuleChecksInput_providerStruct extends ethereum.Tuple {
-  get addr(): Address {
-    return this[0].toAddress();
-  }
-
-  get module(): Address {
-    return this[1].toAddress();
-  }
-}
-
-export class Contract__providerModuleChecksInput_taskStruct extends ethereum.Tuple {
+export class GelatoCore__providerCanExecInput_taskStruct extends ethereum.Tuple {
   get conditions(): Array<
-    Contract__providerModuleChecksInput_taskConditionsStruct
+    GelatoCore__providerCanExecInput_taskConditionsStruct
   > {
     return this[0].toTupleArray<
-      Contract__providerModuleChecksInput_taskConditionsStruct
+      GelatoCore__providerCanExecInput_taskConditionsStruct
     >();
   }
 
-  get actions(): Array<Contract__providerModuleChecksInput_taskActionsStruct> {
+  get actions(): Array<GelatoCore__providerCanExecInput_taskActionsStruct> {
     return this[1].toTupleArray<
-      Contract__providerModuleChecksInput_taskActionsStruct
+      GelatoCore__providerCanExecInput_taskActionsStruct
     >();
   }
 
@@ -1396,7 +1334,7 @@ export class Contract__providerModuleChecksInput_taskStruct extends ethereum.Tup
   }
 }
 
-export class Contract__providerModuleChecksInput_taskConditionsStruct extends ethereum.Tuple {
+export class GelatoCore__providerCanExecInput_taskConditionsStruct extends ethereum.Tuple {
   get inst(): Address {
     return this[0].toAddress();
   }
@@ -1406,7 +1344,7 @@ export class Contract__providerModuleChecksInput_taskConditionsStruct extends et
   }
 }
 
-export class Contract__providerModuleChecksInput_taskActionsStruct extends ethereum.Tuple {
+export class GelatoCore__providerCanExecInput_taskActionsStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -1432,9 +1370,81 @@ export class Contract__providerModuleChecksInput_taskActionsStruct extends ether
   }
 }
 
-export class Contract extends ethereum.SmartContract {
-  static bind(address: Address): Contract {
-    return new Contract("Contract", address);
+export class GelatoCore__providerModuleChecksInput_providerStruct extends ethereum.Tuple {
+  get addr(): Address {
+    return this[0].toAddress();
+  }
+
+  get module(): Address {
+    return this[1].toAddress();
+  }
+}
+
+export class GelatoCore__providerModuleChecksInput_taskStruct extends ethereum.Tuple {
+  get conditions(): Array<
+    GelatoCore__providerModuleChecksInput_taskConditionsStruct
+  > {
+    return this[0].toTupleArray<
+      GelatoCore__providerModuleChecksInput_taskConditionsStruct
+    >();
+  }
+
+  get actions(): Array<
+    GelatoCore__providerModuleChecksInput_taskActionsStruct
+  > {
+    return this[1].toTupleArray<
+      GelatoCore__providerModuleChecksInput_taskActionsStruct
+    >();
+  }
+
+  get selfProviderGasLimit(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get selfProviderGasPriceCeil(): BigInt {
+    return this[3].toBigInt();
+  }
+}
+
+export class GelatoCore__providerModuleChecksInput_taskConditionsStruct extends ethereum.Tuple {
+  get inst(): Address {
+    return this[0].toAddress();
+  }
+
+  get data(): Bytes {
+    return this[1].toBytes();
+  }
+}
+
+export class GelatoCore__providerModuleChecksInput_taskActionsStruct extends ethereum.Tuple {
+  get addr(): Address {
+    return this[0].toAddress();
+  }
+
+  get data(): Bytes {
+    return this[1].toBytes();
+  }
+
+  get operation(): i32 {
+    return this[2].toI32();
+  }
+
+  get dataFlow(): i32 {
+    return this[3].toI32();
+  }
+
+  get value(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get termsOkCheck(): boolean {
+    return this[5].toBoolean();
+  }
+}
+
+export class GelatoCore extends ethereum.SmartContract {
+  static bind(address: Address): GelatoCore {
+    return new GelatoCore("GelatoCore", address);
   }
 
   EXEC_TX_OVERHEAD(): BigInt {
@@ -1476,7 +1486,7 @@ export class Contract extends ethereum.SmartContract {
   }
 
   canExec(
-    _TR: Contract__canExecInput_TRStruct,
+    _TR: GelatoCore__canExecInput_TRStruct,
     _gasLimit: BigInt,
     _gelatoGasPrice: BigInt
   ): string {
@@ -1494,7 +1504,7 @@ export class Contract extends ethereum.SmartContract {
   }
 
   try_canExec(
-    _TR: Contract__canExecInput_TRStruct,
+    _TR: GelatoCore__canExecInput_TRStruct,
     _gasLimit: BigInt,
     _gelatoGasPrice: BigInt
   ): ethereum.CallResult<string> {
@@ -1516,8 +1526,8 @@ export class Contract extends ethereum.SmartContract {
 
   canSubmitTask(
     _userProxy: Address,
-    _provider: Contract__canSubmitTaskInput_providerStruct,
-    _task: Contract__canSubmitTaskInput_taskStruct,
+    _provider: GelatoCore__canSubmitTaskInput_providerStruct,
+    _task: GelatoCore__canSubmitTaskInput_taskStruct,
     _expiryDate: BigInt
   ): string {
     let result = super.call(
@@ -1536,8 +1546,8 @@ export class Contract extends ethereum.SmartContract {
 
   try_canSubmitTask(
     _userProxy: Address,
-    _provider: Contract__canSubmitTaskInput_providerStruct,
-    _task: Contract__canSubmitTaskInput_taskStruct,
+    _provider: GelatoCore__canSubmitTaskInput_providerStruct,
+    _task: GelatoCore__canSubmitTaskInput_taskStruct,
     _expiryDate: BigInt
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
@@ -1581,10 +1591,10 @@ export class Contract extends ethereum.SmartContract {
   }
 
   executionWrapper(
-    taskReceipt: Contract__executionWrapperInputTaskReceiptStruct,
+    taskReceipt: GelatoCore__executionWrapperInputTaskReceiptStruct,
     _gasLimit: BigInt,
     _gelatoGasPrice: BigInt
-  ): Contract__executionWrapperResult {
+  ): GelatoCore__executionWrapperResult {
     let result = super.call(
       "executionWrapper",
       "executionWrapper((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256),uint256,uint256):(uint8,string)",
@@ -1595,17 +1605,17 @@ export class Contract extends ethereum.SmartContract {
       ]
     );
 
-    return new Contract__executionWrapperResult(
+    return new GelatoCore__executionWrapperResult(
       result[0].toI32(),
       result[1].toString()
     );
   }
 
   try_executionWrapper(
-    taskReceipt: Contract__executionWrapperInputTaskReceiptStruct,
+    taskReceipt: GelatoCore__executionWrapperInputTaskReceiptStruct,
     _gasLimit: BigInt,
     _gelatoGasPrice: BigInt
-  ): ethereum.CallResult<Contract__executionWrapperResult> {
+  ): ethereum.CallResult<GelatoCore__executionWrapperResult> {
     let result = super.tryCall(
       "executionWrapper",
       "executionWrapper((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256),uint256,uint256):(uint8,string)",
@@ -1620,7 +1630,7 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Contract__executionWrapperResult(
+      new GelatoCore__executionWrapperResult(
         value[0].toI32(),
         value[1].toString()
       )
@@ -1789,7 +1799,7 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  hashTaskReceipt(_TR: Contract__hashTaskReceiptInput_TRStruct): Bytes {
+  hashTaskReceipt(_TR: GelatoCore__hashTaskReceiptInput_TRStruct): Bytes {
     let result = super.call(
       "hashTaskReceipt",
       "hashTaskReceipt((uint256,address,(address,address),uint256,((address,bytes)[],(address,bytes,uint8,uint8,uint256,bool)[],uint256,uint256)[],uint256,uint256,uint256)):(bytes32)",
@@ -1800,7 +1810,7 @@ export class Contract extends ethereum.SmartContract {
   }
 
   try_hashTaskReceipt(
-    _TR: Contract__hashTaskReceiptInput_TRStruct
+    _TR: GelatoCore__hashTaskReceiptInput_TRStruct
   ): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
       "hashTaskReceipt",
@@ -1814,7 +1824,7 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  hashTaskSpec(_taskSpec: Contract__hashTaskSpecInput_taskSpecStruct): Bytes {
+  hashTaskSpec(_taskSpec: GelatoCore__hashTaskSpecInput_taskSpecStruct): Bytes {
     let result = super.call(
       "hashTaskSpec",
       "hashTaskSpec((address[],(address,bytes,uint8,uint8,uint256,bool)[],uint256)):(bytes32)",
@@ -1825,7 +1835,7 @@ export class Contract extends ethereum.SmartContract {
   }
 
   try_hashTaskSpec(
-    _taskSpec: Contract__hashTaskSpecInput_taskSpecStruct
+    _taskSpec: GelatoCore__hashTaskSpecInput_taskSpecStruct
   ): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
       "hashTaskSpec",
@@ -1996,8 +2006,8 @@ export class Contract extends ethereum.SmartContract {
 
   isTaskProvided(
     _userProxy: Address,
-    _provider: Contract__isTaskProvidedInput_providerStruct,
-    _task: Contract__isTaskProvidedInput_taskStruct
+    _provider: GelatoCore__isTaskProvidedInput_providerStruct,
+    _task: GelatoCore__isTaskProvidedInput_taskStruct
   ): string {
     let result = super.call(
       "isTaskProvided",
@@ -2014,8 +2024,8 @@ export class Contract extends ethereum.SmartContract {
 
   try_isTaskProvided(
     _userProxy: Address,
-    _provider: Contract__isTaskProvidedInput_providerStruct,
-    _task: Contract__isTaskProvidedInput_taskStruct
+    _provider: GelatoCore__isTaskProvidedInput_providerStruct,
+    _task: GelatoCore__isTaskProvidedInput_taskStruct
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "isTaskProvided",
@@ -2035,7 +2045,7 @@ export class Contract extends ethereum.SmartContract {
 
   isTaskSpecProvided(
     _provider: Address,
-    _taskSpec: Contract__isTaskSpecProvidedInput_taskSpecStruct
+    _taskSpec: GelatoCore__isTaskSpecProvidedInput_taskSpecStruct
   ): string {
     let result = super.call(
       "isTaskSpecProvided",
@@ -2051,7 +2061,7 @@ export class Contract extends ethereum.SmartContract {
 
   try_isTaskSpecProvided(
     _provider: Address,
-    _taskSpec: Contract__isTaskSpecProvidedInput_taskSpecStruct
+    _taskSpec: GelatoCore__isTaskSpecProvidedInput_taskSpecStruct
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "isTaskSpecProvided",
@@ -2163,8 +2173,8 @@ export class Contract extends ethereum.SmartContract {
 
   providerCanExec(
     _userProxy: Address,
-    _provider: Contract__providerCanExecInput_providerStruct,
-    _task: Contract__providerCanExecInput_taskStruct,
+    _provider: GelatoCore__providerCanExecInput_providerStruct,
+    _task: GelatoCore__providerCanExecInput_taskStruct,
     _gelatoGasPrice: BigInt
   ): string {
     let result = super.call(
@@ -2183,8 +2193,8 @@ export class Contract extends ethereum.SmartContract {
 
   try_providerCanExec(
     _userProxy: Address,
-    _provider: Contract__providerCanExecInput_providerStruct,
-    _task: Contract__providerCanExecInput_taskStruct,
+    _provider: GelatoCore__providerCanExecInput_providerStruct,
+    _task: GelatoCore__providerCanExecInput_taskStruct,
     _gelatoGasPrice: BigInt
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
@@ -2229,8 +2239,8 @@ export class Contract extends ethereum.SmartContract {
 
   providerModuleChecks(
     _userProxy: Address,
-    _provider: Contract__providerModuleChecksInput_providerStruct,
-    _task: Contract__providerModuleChecksInput_taskStruct
+    _provider: GelatoCore__providerModuleChecksInput_providerStruct,
+    _task: GelatoCore__providerModuleChecksInput_taskStruct
   ): string {
     let result = super.call(
       "providerModuleChecks",
@@ -2247,8 +2257,8 @@ export class Contract extends ethereum.SmartContract {
 
   try_providerModuleChecks(
     _userProxy: Address,
-    _provider: Contract__providerModuleChecksInput_providerStruct,
-    _task: Contract__providerModuleChecksInput_taskStruct
+    _provider: GelatoCore__providerModuleChecksInput_providerStruct,
+    _task: GelatoCore__providerModuleChecksInput_taskStruct
   ): ethereum.CallResult<string> {
     let result = super.tryCall(
       "providerModuleChecks",

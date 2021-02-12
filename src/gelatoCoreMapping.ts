@@ -2,7 +2,7 @@ import { BigInt, Address } from "@graphprotocol/graph-ts";
 import { log } from "@graphprotocol/graph-ts";
 
 import {
-  Contract,
+  GelatoCore,
   LogCanExecFailed,
   LogExecReverted,
   LogExecSuccess,
@@ -31,7 +31,7 @@ import {
   OwnershipTransferred,
   LogTaskSubmittedTaskReceiptTasksActionsStruct,
   LogTaskSubmittedTaskReceiptTasksConditionsStruct,
-} from "../generated/Contract/Contract";
+} from "../generated/GelatoCore/GelatoCore";
 import {
   User,
   TaskReceiptWrapper,
@@ -179,7 +179,7 @@ export function handleLogTaskSubmitted(event: LogTaskSubmitted): void {
   taskReceiptWrapper.submissionDate = event.block.timestamp;
 
   // Assigned Executor
-  let gelatoCore = Contract.bind(event.address);
+  let gelatoCore = GelatoCore.bind(event.address);
   let executor = gelatoCore.executorByProvider(
     Address.fromString(provider.addr.toHexString())
   );

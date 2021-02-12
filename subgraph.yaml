@@ -1,15 +1,15 @@
 specVersion: 0.0.2
-description: Ethereum's Automation Protocol on Mainnet
+description: Ethereum's Automation Protocol (ropsten)
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Contract
-    network: mainnet
+    name: GelatoCore
+    network: ropsten
     source:
       address: "0x025030bdaa159f281cae63873e68313a703725a5"
-      abi: Contract
-      startBlock: 11361987
+      abi: GelatoCore
+      startBlock: 9636890
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -42,8 +42,8 @@ dataSources:
         - LogTaskSubmitted
         - OwnershipTransferred
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: GelatoCore
+          file: ./abis/GelatoCore.json
       eventHandlers:
         - event: LogCanExecFailed(indexed address,indexed uint256,string)
           handler: handleLogCanExecFailed
@@ -97,4 +97,36 @@ dataSources:
           handler: handleLogTaskSubmitted
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-      file: ./src/mapping.ts
+      file: ./src/gelatoCoreMapping.ts
+  - kind: ethereum/contract
+    name: GelatoKrystal
+    network: ropsten
+    source:
+      address: "0x5f7Fc33316A8E0A61f3A039A3C5BF8f36eE8fb5E"
+      abi: GelatoKrystal
+      startBlock: 9636890
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - LogTaskStored
+        - LogTaskRemoved
+        - LogTaskSubmitted
+        - LogTaskCanceled
+        - LogExecSuccess
+      abis:
+        - name: GelatoKrystal
+          file: ./abis/GelatoKrystal.json
+      eventHandlers:
+        - event: LogTaskSubmitted(indexed uint256,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))
+          handler: handleLogTaskSubmitted
+        - event: LogTaskCanceled(indexed uint256,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))
+          handler: handleLogTaskCanceled
+        - event: LogExecSuccess(indexed uint256,indexed address)
+          handler: handleLogExecSuccess
+        - event: LogTaskStored(indexed uint256,indexed address,indexed bytes32,bytes)
+          handler: handleLogTaskStored
+        - event: LogTaskRemoved(indexed address,indexed bytes32)
+          handler: handleLogTaskRemoved
+      file: ./src/gelatoKrystalMapping.ts
