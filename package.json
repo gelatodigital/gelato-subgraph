@@ -4,11 +4,11 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ gelatodigital/gelato-network",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ superarius/gelato-network-ropsten",
     "create-local": "graph create --node http://localhost:8020/ gelatodigital/gelato-network",
     "remove-local": "graph remove --node http://localhost:8020/ gelatodigital/gelato-network",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gelatodigital/gelato-network",
-    "deploy-mainnet": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ gelatodigital/gelato-network"
+    "deploy-mainnet": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ superarius/gelato-network-ropsten"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.19.0",

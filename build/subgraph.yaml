@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-description: Ethereum's Automation Protocol on Mainnet
+description: Ethereum's Automation Protocol (ropsten)
 schema:
   file: schema.graphql
 dataSources:
